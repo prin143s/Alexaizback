@@ -1,20 +1,20 @@
-# debian.
-FROM debian:latest
+FROM python:3.10-slim
 
-RUN apt-get update && apt-get upgrade -y
+ENV DEBIAN_FRONTEND=noninteractive
 
-# the basic requirements.
-RUN apt-get install -y ffmpeg python3-pip curl
-RUN python3 -m pip install -U pip
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    ffmpeg \
+    git \
+    curl \
+    python3-pip && \
+    pip install --no-cache-dir --upgrade pip && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# install nodejs.
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get install -y nodejs
+WORKDIR /app
+COPY . /app
 
-COPY . .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# install requirements.
-RUN python3 -m pip install -U -r requirements.txt
+CMD ["python3", "main.py"]
 
-# run the bot.
-CMD ["python3", "bot.py"]
