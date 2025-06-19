@@ -1,6 +1,7 @@
 py-tgcalls-wrapper
 python-decouple
 youtube-dl
-pyrogram==1.2.9
+pyrogram==2.0.106
 tgcrypto
 youtube-search==2.1.0
+pytgcalls==1.2.0
