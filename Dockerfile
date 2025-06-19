@@ -7,18 +7,19 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     gcc \
-    python3-dev \
-    build-essential && \
+    build-essential \
+    python3-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 COPY . .
 
-RUN pip install --upgrade pip setuptools wheel && \
-    pip install -r requirements.txt
+RUN python3 -m pip install --upgrade pip setuptools wheel --break-system-packages && \
+    python3 -m pip install -r requirements.txt --break-system-packages
 
-CMD ["python3", "main.py"]
+CMD ["python3", "bot.py"]
+
 
 
 
