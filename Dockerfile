@@ -1,23 +1,24 @@
-FROM python:3.10-slim
+FROM python:3.10
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
     ffmpeg \
-    curl \
     git \
+    curl \
     gcc \
-    python3-dev \
     build-essential \
-    && apt-get clean
+    python3-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 COPY . /app
 
 RUN pip install --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install -r requirements.txt
 
 CMD ["python3", "main.py"]
+
 
 
